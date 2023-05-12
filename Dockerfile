@@ -5,3 +5,5 @@ RUN mkdir /scripts
 COPY ./send_to_db.py /scripts/
 
 RUN pip install pymongo
+
+ENTRYPOINT ["python", "/scripts/send_to_db.py"]
