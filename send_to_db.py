@@ -21,13 +21,13 @@ if all([user, password, host, port]):
                 try:
                     value = float(value)
                 except ValueError:
-                    pass 
+                    pass
                 record[clean_key] = value
         collection.insert_one(record)
 
         collection = getattr(db, collec + '_short')
         record_short = {}
-        for key, value in record:
+        for key, value in record.items():
             if 'path' not in key and 'ANALYTICS_MONGODB' not in key:
                 record_short[key] = value
         collection.insert_one(record_short)
