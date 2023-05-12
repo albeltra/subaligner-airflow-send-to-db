@@ -2,12 +2,11 @@ import pymongo
 import os
 import argparse
 
-parser = argparse.ArgumentParser(description='Description of your program')
+parser = argparse.ArgumentParser(description='Description of your program') 
 parser.add_argument('-SUBALIGNER_loss', help='Description for bar argument', required=True)
 parser.add_argument('-SUBALIGNER_time_load_dataset', help='Description for bar argument', required=True)
 parser.add_argument('-SUBALIGNER_video_file_path', help='Description for bar argument', required=True)
 parser.add_argument('-SUBALIGNER_subtitle_file_path', help='Description for bar argument', required=True)
-parser.add_argument('-SUBALIGNER_time_load_dataset', help='Description for bar argument', required=True)
 parser.add_argument('-SUBALIGNER_X_shape', help='Description for bar argument', required=True)
 parser.add_argument('-SUBALIGNER_time_predictions', help='Description for bar argument', required=True)
 parser.add_argument('-SUBALIGNER_seconds_to_shift', help='Description for bar argument', required=True)
