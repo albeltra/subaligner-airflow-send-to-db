@@ -1,5 +1,6 @@
 import pymongo
 import os
+import json
 
 user = os.environ.get('MONGO_USER', 'root')
 password = os.environ.get('MONGO_PASSWORD')
@@ -8,6 +9,9 @@ port = os.environ.get('MONGO_PORT', '27017')
 
 database = os.environ.get('DB')
 collec = os.environ.get('COLLECTION')
+
+mediaFile = json.loads(os.environ.get("mediaFile")) if os.environ.get("mediaFile") else None
+mediaInfo = json.loads(os.environ.get("mediaInfo")) if os.environ.get("mediaInfo") else None
 
 if all([user, password, host, port]):
     if database and collec:
@@ -23,6 +27,11 @@ if all([user, password, host, port]):
                 except ValueError:
                     pass
                 record[clean_key] = value
+        if mediaFile:
+            record["mediaFile"] = mediaFile
+        if mediaInfo:
+            record["mediaInfo"] = mediaInfo
+
         collection.insert_one(record)
 
         collection = getattr(db, collec + '_short')
@@ -30,7 +39,28 @@ if all([user, password, host, port]):
         for key, value in record.items():
             if 'path' not in key and 'ANALYTICS_MONGODB' not in key:
                 record_short[key] = value
+        if mediaFile:
+            if "movieId" in mediaFile:
+                record_short["kind"] = "movie"
+            else:
+                record_short["kind"] = "tv"
+        if mediaInfo:
+            record_short["audioBitrate"] = mediaInfo.get("audioBitrate")
+            record_short["audioChannels"] = mediaInfo.get("audioChannels")
+            record_short["audioCodec"] = mediaInfo.get("audioCodec")
+            record_short["audioLanguages"] = mediaInfo.get("audioLanguages")
+            record_short["audioStreamCount"] = mediaInfo.get("audioStreamCount")
+            record_short["videoBitDepth"] = mediaInfo.get("videoBitDepth")
+            record_short["videoBitrate"] = mediaInfo.get("videoBitrate")
+            record_short["videoCodec"] = mediaInfo.get("videoCodec")
+            record_short["videoDynamicRangeType"] = mediaInfo.get("videoDynamicRangeType")
+            record_short["videoFps"] = mediaInfo.get("videoFps")
+            record_short["resolution"] = mediaInfo.get("resolution")
+            record_short["runTime"] = mediaInfo.get("runTime")
+            record_short["scanType"] = mediaInfo.get("scanType")
+            record_short["subtitles"] = mediaInfo.get("subtitles")
         collection.insert_one(record_short)
+
     else:
         raise Exception('Must specify mongo db and collection names!')
 else:
