@@ -2,6 +2,7 @@ import pymongo
 import os
 import json
 import ast
+from datetime import datetime
 
 user = os.environ.get('MONGO_USER', 'root')
 password = os.environ.get('MONGO_PASSWORD')
@@ -32,6 +33,9 @@ if all([user, password, host, port]):
             record["mediaFile"] = mediaFile
         if mediaInfo:
             record["mediaInfo"] = mediaInfo
+
+        now = datetime.now()
+        record['date'] = now
 
         collection.insert_one(record)
 
@@ -64,6 +68,8 @@ if all([user, password, host, port]):
 
         del record_short["mediaFile"]
         del record_short["mediaInfo"]
+
+        record_short['date'] = now 
 
         collection.insert_one(record_short)
 
