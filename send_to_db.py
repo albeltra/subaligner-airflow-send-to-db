@@ -9,7 +9,7 @@ host = os.environ.get('MONGO_HOST')
 port = os.environ.get('MONGO_PORT', '27017')
 
 database = os.environ.get('DB')
-collec = os.environ.get('COLLECTION') 
+collec = os.environ.get('COLLECTION')
 
 mediaFile = ast.literal_eval(os.environ.get("mediaFile")) if os.environ.get("mediaFile") else None
 mediaInfo = ast.literal_eval(os.environ.get("mediaInfo")) if os.environ.get("mediaInfo") else None
@@ -17,7 +17,7 @@ mediaInfo = ast.literal_eval(os.environ.get("mediaInfo")) if os.environ.get("med
 if all([user, password, host, port]):
     if database and collec:
         client = pymongo.MongoClient(f'mongodb://{user}:{password}@{host}:{port}')
-        db = getattr(client, database)1
+        db = getattr(client, database)
         collection = getattr(db, collec)
         record = {}
         for key, value in os.environ.items():
