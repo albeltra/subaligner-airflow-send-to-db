@@ -65,9 +65,6 @@ if all([user, password, host, port]):
         del record_short["mediaFile"]
         del record_short["mediaInfo"]
 
-        for k, v in record_short.lower():
-            if type(v) == str:
-                record_short[k] = v.lower()
         collection.insert_one(record_short)
 
     else:
