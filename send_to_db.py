@@ -61,6 +61,13 @@ if all([user, password, host, port]):
             record_short["runTime"] = mediaInfo.get("runTime", "")
             record_short["scanType"] = mediaInfo.get("scanType", "")
             record_short["subtitles"] = mediaInfo.get("subtitles", "")
+
+        del record_short["mediaFile"]
+        del record_short["mediaInfo"]
+
+        for k, v in record_short.lower():
+            if type(v) == str:
+                record_short[k] = v.lower()
         collection.insert_one(record_short)
 
     else:
