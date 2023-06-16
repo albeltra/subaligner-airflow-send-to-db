@@ -45,7 +45,7 @@ if all([user, password, host, port]):
             if 'path' not in key and 'ANALYTICS_MONGODB' not in key:
                 record_short[key] = value
         if mediaFile:
-            record_short["releaseGroup"] = mediaFile.get("releaseGroup", "")
+            record_short["releaseGroup"] = mediaFile.get("releaseGroup", "").lower()
             if "movieId" in mediaFile:
                 record_short["kind"] = "movie"
             else:
@@ -69,7 +69,7 @@ if all([user, password, host, port]):
         del record_short["mediaFile"]
         del record_short["mediaInfo"]
 
-        record_short['date'] = now 
+        record_short['date'] = now
 
         collection.insert_one(record_short)
 
