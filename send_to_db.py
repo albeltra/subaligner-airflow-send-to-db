@@ -39,7 +39,8 @@ if all([user, password, host, port]):
 
         collection.insert_one(record)
 
-        collection = getattr(db, collec + '_short')
+        db = getattr(client, database + "_public")
+        collection = getattr(db, collec)
         record_short = {}
         for key, value in record.items():
             if 'path' not in key and 'ANALYTICS_MONGODB' not in key:
