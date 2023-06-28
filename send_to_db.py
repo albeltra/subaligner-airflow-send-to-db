@@ -62,8 +62,13 @@ if all([user, password, host, port]):
             record_short["videoCodec"] = mediaInfo.get("videoCodec", "").lower()
             record_short["videoDynamicRangeType"] = mediaInfo.get("videoDynamicRangeType", "")
             record_short["videoFps"] = mediaInfo.get("videoFps", "")
-            record_short["resolution"] = mediaInfo.get("resolution", "").lower() 
+            record_short["resolution"] = mediaInfo.get("resolution", "").lower()
             record_short["runTime"] = mediaInfo.get("runTime", "")
+            if record_short["runTime"]:
+                seconds = 0
+                for time, conversion in zip(record_short["runTime"].split(':')[::-1], [1/60, 1, 60]):
+                    seconds += float(time) * conversion
+                record_short["runTime"] = seconds
             record_short["scanType"] = mediaInfo.get("scanType", "")
             record_short["subtitles"] = mediaInfo.get("subtitles", "")
 
