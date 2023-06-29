@@ -37,7 +37,7 @@ if all([user, password, host, port]):
 
         now = datetime.now()
         record['date'] = now
-        record['data_type']
+        record['data_type'] = data_type
 
         collection.insert_one(record)
 
