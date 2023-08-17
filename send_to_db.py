@@ -11,7 +11,7 @@ port = os.environ.get('MONGO_PORT', '27017')
 
 database = os.environ.get('DB')
 data_type = os.environ.get('DATA_TYPE')
-weight = os.environ.get('weight')
+weight = os.environ.get('WEIGHT')
 collec = os.environ.get('COLLECTION')
 
 mediaFile = ast.literal_eval(os.environ.get("mediaFile")) if os.environ.get("mediaFile") else None
@@ -39,7 +39,7 @@ if all([user, password, host, port]):
         now = datetime.now()
         record['date'] = now
         record['data_type'] = data_type
-        record['weight'] = weight 
+        record['weight'] = weight
 
         collection.insert_one(record)
 
