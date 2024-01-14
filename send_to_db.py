@@ -1,6 +1,7 @@
 import pymongo
 import os
 import json
+import math
 import ast
 from datetime import datetime
 
@@ -39,6 +40,9 @@ if all([user, password, host, port]):
                 record_short[key] = value
 
         record_short['kind'] = kind
+        record_short['index'] = int(collection.count_documents({})) + 1
+        record_short['index_100'] = math.floor(record_short['index'] / 100)
+        record_short['index_1000'] = math.floor(record_short['index'] / 1000) 
 
         collection.insert_one(record_short)
 
