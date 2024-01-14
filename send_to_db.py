@@ -1,9 +1,8 @@
-import pymongo
-import os
-import json
-import math
 import ast
+import os
 from datetime import datetime
+
+import pymongo
 
 user = os.environ.get('MONGO_USER', 'root')
 password = os.environ.get('MONGO_PASSWORD')
@@ -41,8 +40,8 @@ if all([user, password, host, port]):
 
         record_short['kind'] = kind
         record_short['index'] = int(collection.count_documents({})) + 1
-        record_short['index_100'] = math.floor(record_short['index'] / 100)
-        record_short['index_1000'] = math.floor(record_short['index'] / 1000) 
+        record_short['index_100'] = record_short['index'] // 100
+        record_short['index_1000'] = record_short['index'] // 1000
 
         collection.insert_one(record_short)
 
