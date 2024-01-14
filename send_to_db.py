@@ -32,6 +32,7 @@ if all([user, password, host, port]):
 
         now = datetime.now()
         record['date'] = now
+        record['kind'] = kind
 
         record_short = {}
         for key, value in record.items():
