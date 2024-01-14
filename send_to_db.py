@@ -32,13 +32,13 @@ if all([user, password, host, port]):
 
         now = datetime.now()
         record['date'] = now
-        record['kind'] = kind
 
         record_short = {}
         for key, value in record.items():
             if 'path' not in key and 'ANALYTICS_MONGODB' not in key:
                 record_short[key] = value
 
+        record_short['kind'] = kind
 
         collection.insert_one(record_short)
 
