@@ -32,19 +32,20 @@ if all([user, password, host, port]):
 
         now = datetime.now()
         record['date'] = now
+        record['kind'] = kind
+        collection.insert_one(record)
 
         record_short = {}
         for key, value in record.items():
             if 'path' not in key and 'ANALYTICS_MONGODB' not in key:
                 record_short[key] = value
 
-        record_short['kind'] = kind
         record_short['path'] = hash(record['subtitle_file_path'])
         record_short['index'] = int(collection.count_documents({"kind": {"$eq": kind}})) + 1
         record_short['index_100'] = record_short['index'] // 100
         record_short['index_1000'] = record_short['index'] // 1000
-
-        collection.insert_one(record_short)
+        public_collection = getattr(db, collec + "_public")
+        public_collection.insert_one(record_short)
 
     else:
         raise Exception('Must specify mongo db and collection names!')
