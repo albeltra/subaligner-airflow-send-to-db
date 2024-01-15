@@ -39,7 +39,7 @@ if all([user, password, host, port]):
                 record_short[key] = value
 
         record_short['kind'] = kind
-        record_short['path'] = hash(record['subtitle_file_path']) 
+        record_short['path'] = hash(record['subtitle_file_path'])
         record_short['index'] = int(collection.count_documents({"kind": {"$eq": kind}})) + 1
         record_short['index_100'] = record_short['index'] // 100
         record_short['index_1000'] = record_short['index'] // 1000
